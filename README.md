@@ -84,28 +84,4 @@ python transcribe.py
 
 ---
 
-## Output Example (OCR)
-```json
-{
-  "patient_name": "GURSEL, EGE",
-  "dob": "1952-04-04",
-  "hemoglobin": {
-    "test_name": "Hemoglobin",
-    "value": "12.8",
-    "units": "gm/dL",
-    "warning": null
-  },
-  "creatinine": {
-    "test_name": "Creatinine Level",
-    "value": "0.8",
-    "units": "mg/dL",
-    "warning": null
-  },
-  "bun": {
-    "test_name": "BUN",
-    "value": "24",
-    "units": "mg/dL",
-    "warning": "High"
-  }
-}
-```
+Developed by Ege Gursel for WinFully On Technologies' Summer 2025 AI/ML Internship Application.
