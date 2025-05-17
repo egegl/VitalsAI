@@ -1,6 +1,6 @@
 # VitalsAI
 
-A toolkit for extracting structured clinical data from PDF discharge summaries and transcribing audio using OCR and speech-to-text models.
+A tool for extracting structured clinical data from PDF discharge summaries and transcribing audio using OCR and speech-to-text models.
 
 ## Features
 
