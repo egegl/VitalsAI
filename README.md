@@ -1,10 +1,10 @@
 # VitalsAI
 
-A toolkit for extracting structured clinical data from PDF discharge summaries and transcribing audio using state-of-the-art OCR and speech-to-text models.
+A tool for extracting structured clinical data from PDF discharge summaries and transcribing audio using OCR and speech-to-text models.
 
 ## Features
 
-- **PDF OCR Extraction**: Extracts patient name, date of birth, and key lab results (Hemoglobin, Creatinine, BUN, with warnings) from scanned discharge summaries.
+- **PDF OCR Extraction**: Extracts patient name, date of birth, and key lab results with their warnings from scanned discharge notes.
 - **Audio Transcription**: Records audio from your microphone and transcribes it using OpenAI's Whisper model.
 - **Outputs**: Structured JSON for clinical data, raw OCR text, audio WAV files, and transcript text files.
 
@@ -84,28 +84,4 @@ python transcribe.py
 
 ---
 
-## Output Example (OCR)
-```json
-{
-  "patient_name": "ASHBY, ANNIE LAURIE",
-  "dob": "1932-04-04",
-  "hemoglobin": {
-    "test_name": "Hemoglobin",
-    "value": "13.8",
-    "units": "gm/dL",
-    "warning": null
-  },
-  "creatinine": {
-    "test_name": "Creatinine Level",
-    "value": "0.7",
-    "units": "mg/dL",
-    "warning": null
-  },
-  "bun": {
-    "test_name": "BUN",
-    "value": "23",
-    "units": "mg/dL",
-    "warning": "High"
-  }
-}
-```
+Developed by Ege Gursel for WinFully On Technologies' Summer 2025 AI/ML Internship Application.
