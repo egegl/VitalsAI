@@ -87,23 +87,23 @@ python transcribe.py
 ## Output Example (OCR)
 ```json
 {
-  "patient_name": "ASHBY, ANNIE LAURIE",
-  "dob": "1932-04-04",
+  "patient_name": "GURSEL, EGE",
+  "dob": "1952-04-04",
   "hemoglobin": {
     "test_name": "Hemoglobin",
-    "value": "13.8",
+    "value": "12.8",
     "units": "gm/dL",
     "warning": null
   },
   "creatinine": {
     "test_name": "Creatinine Level",
-    "value": "0.7",
+    "value": "0.8",
     "units": "mg/dL",
     "warning": null
   },
   "bun": {
     "test_name": "BUN",
-    "value": "23",
+    "value": "24",
     "units": "mg/dL",
     "warning": "High"
   }
