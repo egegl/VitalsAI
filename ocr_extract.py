@@ -7,7 +7,6 @@ import cv2
 import numpy as np
 import pytesseract
 from pdf2image import convert_from_path
-from PIL import Image
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

@@ -11,13 +11,13 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def ensure_output_dir():
-    """Ensure the output directory exists."""
+    # Check if the output directory exists
     output_dir = Path("outputs")
     output_dir.mkdir(exist_ok=True)
     return output_dir
 
 def record_audio(duration=total_duration, sample_rate=44100):
-    """Record audio from microphone."""
+    # Record audio from microphone
     logger.info(f"Recording {duration} seconds of audio...")
     try:
         # Record audio in one go

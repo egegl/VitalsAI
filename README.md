@@ -1,101 +1,111 @@
-# Clinical Lab Report OCR and Audio Transcription
+# VitalsAI
 
-This project provides two main functionalities:
-1. OCR extraction from clinical lab reports (PDF or image)
-2. Audio recording and transcription
+A toolkit for extracting structured clinical data from PDF discharge summaries and transcribing audio using state-of-the-art OCR and speech-to-text models.
 
-## Prerequisites
+## Features
 
-- Python 3.8 or higher
-- Tesseract OCR installed on your system
-- Microphone access for audio recording
+- **PDF OCR Extraction**: Extracts patient name, date of birth, and key lab results (Hemoglobin, Creatinine, BUN, with warnings) from scanned discharge summaries.
+- **Audio Transcription**: Records audio from your microphone and transcribes it using OpenAI's Whisper model.
+- **Outputs**: Structured JSON for clinical data, raw OCR text, audio WAV files, and transcript text files.
 
-### Installing Tesseract OCR
-
-#### macOS
-```bash
-brew install tesseract
-```
-
-#### Ubuntu/Debian
-```bash
-sudo apt-get install tesseract-ocr
-```
-
-#### Windows
-Download and install from: https://github.com/UB-Mannheim/tesseract/wiki
+---
 
 ## Installation
 
-1. Clone this repository:
-```bash
-git clone <repository-url>
-cd <repository-name>
-```
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd VitalsAI
+   ```
 
-2. Create a virtual environment (recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+2. **Set up a Python virtual environment**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
 
-3. Install required packages:
-```bash
-pip install -r requirements.txt
-```
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   **Required packages:**
+   - opencv-python
+   - numpy
+   - pytesseract
+   - pdf2image
+   - pillow
+   - sounddevice
+   - soundfile
+   - openai-whisper
+   - torch
+
+4. **Install Tesseract OCR and FFmpeg**
+   - **macOS:**
+     ```bash
+     brew install tesseract ffmpeg
+     ```
+   - **Linux:**
+     ```bash
+     sudo apt-get install tesseract-ocr ffmpeg
+     ```
+   - **Windows:**
+     - [Tesseract installer](https://github.com/tesseract-ocr/tesseract)
+     - [FFmpeg installer](https://ffmpeg.org/download.html)
+     - Add both to your PATH
+
+---
 
 ## Usage
 
-### OCR Extraction
+### 1. OCR Extraction from Discharge Note PDF
 
-1. Place your clinical lab report (PDF or image) in the `sample_inputs` directory.
-2. Run the OCR script:
+Place your PDF file in the `sample_inputs` directory.
+
+Run:
 ```bash
 python ocr_extract.py
 ```
 
-The script will:
-- Convert PDF to image if needed
-- Preprocess the image
-- Extract text using Tesseract OCR
-- Parse clinical data
-- Save results to `outputs/extracted_data.json`
+**Outputs:**
+- `outputs/extracted_data.json` — structured clinical data
+- `outputs/ocr_output.txt` — full OCR text from the PDF
 
-### Audio Transcription
+### 2. Audio Transcription
 
-1. Run the transcription script:
+Run:
 ```bash
 python transcribe.py
 ```
 
-The script will:
-- Record 30 seconds of audio from your microphone
-- Save the recording as `outputs/audio.wav`
-- Transcribe the audio using Whisper
-- Save the transcript to `outputs/transcript.txt`
+- Records 30 seconds of audio from your microphone
+- Outputs:
+  - `outputs/audio.wav` — the recorded audio
+  - `outputs/transcript.txt` — the transcribed text
 
-## Output Format
+---
 
-### OCR Output (extracted_data.json)
+## Output Example (OCR)
 ```json
 {
-  "patient_name": "Jane Doe",
-  "dob": "1985-06-12",
-  "test_name": "Hemoglobin",
-  "value": "13.2",
-  "units": "g/dL"
+  "patient_name": "ASHBY, ANNIE LAURIE",
+  "dob": "1932-04-04",
+  "hemoglobin": {
+    "test_name": "Hemoglobin",
+    "value": "13.8",
+    "units": "gm/dL",
+    "warning": null
+  },
+  "creatinine": {
+    "test_name": "Creatinine Level",
+    "value": "0.7",
+    "units": "mg/dL",
+    "warning": null
+  },
+  "bun": {
+    "test_name": "BUN",
+    "value": "23",
+    "units": "mg/dL",
+    "warning": "High"
+  }
 }
 ```
-
-### Audio Transcription Output (transcript.txt)
-The transcript will be saved as plain text.
-
-## Error Handling
-
-Both scripts include comprehensive error handling and logging. Check the console output for any issues during execution.
-
-## Notes
-
-- The OCR script assumes a specific format for the clinical lab report. You may need to adjust the regex patterns in `parse_clinical_data()` to match your specific report format.
-- The audio recording is set to 30 seconds by default. You can modify this in the `record_audio()` function.
-- Make sure you have sufficient disk space for the Whisper model and audio files. 
