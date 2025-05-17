@@ -27,7 +27,9 @@ def record_audio(duration=total_duration, sample_rate=44100):
             channels=1,
             dtype='float32'
         )
-        sd.wait()  # Wait until recording is finished
+
+        # Wait until recording is finished
+        sd.wait()
         logger.info(f"Finished recording {duration} seconds of audio")
         return recording, sample_rate
     except Exception as e:
@@ -35,7 +37,7 @@ def record_audio(duration=total_duration, sample_rate=44100):
         raise
 
 def save_audio(recording, sample_rate, output_path):
-    """Save recorded audio to WAV file"""
+    # Save recorded audio to WAV file
     logger.info(f"Saving audio to {output_path}")
     try:
         sf.write(output_path, recording, sample_rate)
@@ -44,14 +46,14 @@ def save_audio(recording, sample_rate, output_path):
         raise
 
 def transcribe_audio(audio_path):
-    """Transcribe audio using Whisper."""
+    # Transcribe audio using Whisper
     logger.info("Loading Whisper model")
     try:
         # Load Whisper model
         model = whisper.load_model("base")
-        
-        logger.info("Transcribing audio")
+
         # Transcribe audio
+        logger.info("Transcribing audio")
         result = model.transcribe(str(audio_path))
         
         return result["text"]
@@ -60,7 +62,7 @@ def transcribe_audio(audio_path):
         raise
 
 def save_transcript(text, output_path):
-    """Save transcription to text file."""
+    # Save transcription to text file
     logger.info(f"Saving transcript to {output_path}")
     try:
         with open(output_path, 'w') as f:
@@ -70,29 +72,25 @@ def save_transcript(text, output_path):
         raise
 
 def main():
-    """Main function to record and transcribe audio."""
+    # Main method to record and transcribe audio
     try:
-        # Ensure output directory exists
+        # Check if output directory exists
         output_dir = ensure_output_dir()
         
-        # Record audio
+        # Record and save audio
         recording, sample_rate = record_audio()
-        
-        # Save audio
         audio_path = output_dir / "audio.wav"
         save_audio(recording, sample_rate, audio_path)
         
-        # Transcribe audio
+        # Transcribe audio and save transcript
         transcript = transcribe_audio(audio_path)
-        
-        # Save transcript
         transcript_path = output_dir / "transcript.txt"
         save_transcript(transcript, transcript_path)
         
         logger.info("Audio recording and transcription completed successfully!")
         
     except Exception as e:
-        logger.error(f"Error in main process: {e}")
+        logger.error(f"Error in process: {e}")
         raise
 
 if __name__ == "__main__":

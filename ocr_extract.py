@@ -13,13 +13,13 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def ensure_output_dir():
-    """Ensure the output directory exists."""
+    # Ensure the output directory exists
     output_dir = Path("outputs")
     output_dir.mkdir(exist_ok=True)
     return output_dir
 
 def convert_pdf_to_images(pdf_path):
-    """Convert all pages of PDF to images."""
+    # Convert all pages of PDF to images
     logger.info(f"Converting PDF to images: {pdf_path}")
     try:
         images = convert_from_path(pdf_path)
@@ -31,7 +31,7 @@ def convert_pdf_to_images(pdf_path):
         raise
 
 def preprocess_image(image):
-    """Preprocess image for better OCR results."""
+    # Preprocess image for better OCR
     logger.info("Preprocessing image...")
     try:
         # Convert to grayscale
@@ -46,7 +46,7 @@ def preprocess_image(image):
         raise
 
 def extract_text_from_image(image):
-    """Extract text from image using Tesseract OCR."""
+    # Extract text from image using Tesseract OCR
     logger.info("Extracting text using Tesseract OCR...")
     try:
         text = pytesseract.image_to_string(image)
@@ -56,7 +56,7 @@ def extract_text_from_image(image):
         raise
 
 def parse_clinical_data(text):
-    """Parse clinical data from extracted text using regex."""
+    # Parse clinical data from extracted text using regex
     logger.info("Parsing clinical data...")
     
     data = {
@@ -98,7 +98,7 @@ def parse_clinical_data(text):
             month, day, year = dob.split('/')
             data["dob"] = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
         
-        # Hemoglobin (Hgb)
+        # Hemoglobin
         hgb_match = re.search(r"[\{\(\|]?\s*Hgb\s*([0-9.]+)\s*([a-zA-Z/%]+)(?:\s*\((High|Low|Critical)\))?", text)
         if hgb_match:
             data["hemoglobin"]["test_name"] = "Hemoglobin"
@@ -106,7 +106,7 @@ def parse_clinical_data(text):
             data["hemoglobin"]["units"] = hgb_match.group(2)
             data["hemoglobin"]["warning"] = hgb_match.group(3) if hgb_match.group(3) else None
         
-        # Creatinine Level
+        # Creatinine
         creat_match = re.search(r"[\{\(\|]?\s*Creatinine Level\s*[\{\(\|]?\s*([0-9.]+)\s*([a-zA-Z0-9/%]+)(?:\s*\((High|Low|Critical)\))?", text)
         if creat_match:
             data["creatinine"]["test_name"] = "Creatinine Level"
@@ -128,7 +128,7 @@ def parse_clinical_data(text):
         raise
 
 def save_json(data, output_path):
-    """Save extracted data to JSON file."""
+    # Save extracted data to JSON file
     logger.info(f"Saving data to {output_path}")
     try:
         with open(output_path, 'w') as f:
@@ -138,7 +138,7 @@ def save_json(data, output_path):
         raise
 
 def process_file(input_path):
-    """Main function to process input file."""
+    # Main method to process input file
     try:
         output_dir = ensure_output_dir()
         if input_path.lower().endswith('.pdf'):
@@ -148,6 +148,7 @@ def process_file(input_path):
             if image is None:
                 raise ValueError(f"Could not read image file: {input_path}")
             images = [image]
+
         # OCR all pages
         all_text = ""
         for image in images:
@@ -158,6 +159,7 @@ def process_file(input_path):
         clinical_data = parse_clinical_data(all_text)
         output_path = output_dir / "extracted_data.json"
         save_json(clinical_data, output_path)
+
         # Save full OCR text to outputs/ocr_output.txt
         ocr_txt_path = output_dir / "ocr_output.txt"
         with open(ocr_txt_path, 'w') as f:
@@ -170,8 +172,7 @@ def process_file(input_path):
         raise
 
 if __name__ == "__main__":
-    # Example usage
-    input_file = "sample_inputs/discharge_note.pdf"  # or "sample_inputs/sample.jpg"
+    input_file = "sample_inputs/discharge_note.pdf"
     if not os.path.exists(input_file):
         logger.error(f"Input file not found: {input_file}")
     else:
