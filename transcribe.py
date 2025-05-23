@@ -7,7 +7,7 @@ from pathlib import Path
 total_duration = 30
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 def ensure_output_dir():
@@ -71,8 +71,8 @@ def save_transcript(text, output_path):
         logger.error(f"Error saving transcript: {e}")
         raise
 
+# Main method to record and transcribe audio
 def main():
-    # Main method to record and transcribe audio
     try:
         # Check if output directory exists
         output_dir = ensure_output_dir()
