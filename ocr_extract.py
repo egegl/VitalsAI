@@ -13,7 +13,6 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 def ensure_output_dir():
-    # Ensure the output directory exists
     output_dir = Path("outputs")
     output_dir.mkdir(exist_ok=True)
     return output_dir
