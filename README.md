@@ -10,51 +10,6 @@ A tool for extracting structured clinical data from PDF discharge summaries and 
 
 ---
 
-## Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd VitalsAI
-   ```
-
-2. **Set up a Python virtual environment**
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-   **Required packages:**
-   - opencv-python
-   - numpy
-   - pytesseract
-   - pdf2image
-   - pillow
-   - sounddevice
-   - soundfile
-   - openai-whisper
-   - torch
-
-4. **Install Tesseract OCR and FFmpeg**
-   - **macOS:**
-     ```bash
-     brew install tesseract ffmpeg
-     ```
-   - **Linux:**
-     ```bash
-     sudo apt-get install tesseract-ocr ffmpeg
-     ```
-   - **Windows:**
-     - [Tesseract installer](https://github.com/tesseract-ocr/tesseract)
-     - [FFmpeg installer](https://ffmpeg.org/download.html)
-     - Add both to your PATH
-
----
-
 ## Usage
 
 ### 1. OCR Extraction from Discharge Note PDF
